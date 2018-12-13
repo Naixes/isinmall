@@ -1,0 +1,30 @@
+{
+  "status": 0,
+  "msg": "",
+  "result": [
+    {
+    "productId": "0001",
+    "productName": "天猫精灵",
+    "productPrice": "299",
+    "img": "1.jpg"
+    }, 
+    {
+    "productId": "0002",
+    "productName": "无线耳机",
+    "productPrice": "899",
+    "img": "2.jpg"
+    }, 
+    {
+    "productId": "0003",
+    "productName": "耳机",
+    "productPrice": "1299",
+    "img": "3.jpg"
+    }, 
+    {
+    "productId": "0004",
+    "productName": "耳机2",
+    "productPrice": "599",
+    "img": "4.jpg"
+    }
+  ]
+}
