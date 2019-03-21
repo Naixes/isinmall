@@ -125,7 +125,6 @@
                 Item total: <span class="total-price">{{totalPrice | currencyFormat('$')}}</span>
               </div>
               <div class="btn-wrap">
-                <!-- 判断是否有选中至少一个商品 -->
                 <router-link to="/address" class="btn btn--red" :class="{'btn--dis':checkedCount == 0}">Checkout</router-link>
               </div>
             </div>
