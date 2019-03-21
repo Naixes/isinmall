@@ -8,7 +8,7 @@ var Goods = require('../models/goods')
 var Users = require('../models/users')
 
 // 连接数据库
-mongoose.connect('mongodb://127.0.0.1:27017/sinmall')
+mongoose.connect('mongodb://127.0.0.1:27017/isinmall')
 
 // 监听连接状态
 mongoose.connection.on('connected', () => {
