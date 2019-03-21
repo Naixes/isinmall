@@ -61,7 +61,7 @@
           <div class="addr-list-wrap">
             <div class="addr-list">
               <ul>
-                <li v-for="(item,index) in addressListLimit" :class="{check:index==checkIndex}" @click="checkIndex=index,checkAddressId=item.addressId">
+                <li v-for="(item,index) in addressListLimit" :key="item.addressId" :class="{check:index==checkIndex}" @click="checkIndex=index,checkAddressId=item.addressId">
                   <dl>
                     <dt>{{item.userName}}</dt>
                     <dd class="address">{{item.streetName}}</dd>
@@ -73,8 +73,10 @@
                     </a>
                   </div>
                   <div class="addr-opration addr-set-default" v-show="!item.isDefault">
+                    <!-- 设置默认地址 -->
                     <a class="addr-set-default-btn" @click="setDefault(item.addressId)"><i>Set default</i></a>
                   </div>
+                  <!-- 根据字段显示 -->
                   <div class="addr-opration addr-default" v-show="item.isDefault">Default address</div>
                 </li>
                 <li class="addr-new">
@@ -89,6 +91,7 @@
             </div>
 
             <div class="shipping-addr-more">
+              <!-- 加载更多 -->
               <a class="addr-more-btn up-down-btn" @click="more">
                 more
                 <i class="i-up-down">
@@ -161,6 +164,7 @@
       }
     },
     computed: {
+      // 控制地址的显示数量
       addressListLimit: {
         get() {
           return this.addressList.slice(0, this.limit)

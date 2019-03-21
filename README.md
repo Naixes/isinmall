@@ -54,11 +54,13 @@ express中间件
 
 ## 格式化价格
 
+过滤器
+
 ## 滚动加载
 
 vue-infinite-scroll
 
-## 结合slot创建全局模态框
+## 结合slot创建全局模态框组件
 
 ## 父子组件通信
 
