@@ -125,7 +125,8 @@
                 Item total: <span class="total-price">{{totalPrice | currencyFormat('$')}}</span>
               </div>
               <div class="btn-wrap">
-                <router-link to="/address" class="btn btn--red" :class="{'btn--dis':checkedCount == 0}">Checkout</router-link>
+                <!-- 判断是否有选中至少一个商品 -->
+                <a to="/address" class="btn btn--red" :class="{'btn--dis':checkedCount == 0}" @click="checkout">Checkout</a>
               </div>
             </div>
           </div>
@@ -261,6 +262,14 @@
 
           }
         })
+      },
+      // 在方法中跳转checkout，防止没有商品选中时强行跳转
+      checkout() {
+        if(this.checkedCount > 0) {
+          this.$router.push({
+            path: "/address"
+          })
+        }
       }
     }
   }
