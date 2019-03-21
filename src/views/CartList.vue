@@ -60,9 +60,10 @@
               </ul>
             </div>
             <ul class="cart-item-list">
-              <li v-for="item in cartList">
+              <li v-for="item in cartList" :key="item.productId">
                 <div class="cart-tab-1">
                   <div class="cart-item-check">
+                    <!-- 选中/取消商品 -->
                     <a class="checkbox-btn item-check-btn" :class="{check:item.checked == 1}" @click="cartEdit('check',item)">
                       <svg class="icon icon-ok">
                         <use xlink:href="#icon-ok"></use>
@@ -83,6 +84,7 @@
                   <div class="item-quantity">
                     <div class="select-self select-self-open">
                       <div class="select-self-area">
+                        <!-- 添加/减少商品数量 -->
                         <a class="input-sub" @click="cartEdit('minus',item)">-</a>
                         <span class="select-ipt">{{item.productNum}}</span>
                         <a class="input-add" @click="cartEdit('add',item)">+</a>
@@ -123,7 +125,8 @@
                 Item total: <span class="total-price">{{totalPrice | currencyFormat('$')}}</span>
               </div>
               <div class="btn-wrap">
-                <router-link to="/address" class="btn btn--red" >Checkout</router-link>
+                <!-- 判断是否有选中至少一个商品 -->
+                <router-link to="/address" class="btn btn--red" :class="{'btn--dis':checkedCount == 0}">Checkout</router-link>
               </div>
             </div>
           </div>
@@ -148,8 +151,6 @@
   import Modal from '@/components/Modal'
   import axios from 'axios'
 
-//  import {currency} from '@/util/currency'
-
   export default {
     data() {
       return {
@@ -172,12 +173,20 @@
       // 如果不设置setter自动计算的属性在其他地方赋值可能会不起作用
       checkAll: {
         get() {
+          // console.log(this.checkedCount)
+          // console.log(this.cartList.length)
+          return this.checkedCount == this.cartList.length
+        },
+        set() {}
+      },
+      // 选中的商品数量
+      checkedCount: {
+        get() {
           let i = 0
           this.cartList.forEach(item => {
             if(item.checked == '1') i++
-            return i
           })
-          return this.checkAll = (i == this.cartList.length)
+          return i
         },
         set() {}
       },
@@ -197,11 +206,13 @@
         axios.get('/users/cartList').then(result => {
           let res = result.data
           if(res.status == '0') {
+            console.log(res.result.cartList)
             this.cartList = res.result.cartList
           }
         })
       },
       delConfirm(delItem) {
+        // 保存删除项目的信息
         this.delItem = delItem
         this.delConfirmShow = true
       },
@@ -212,6 +223,7 @@
             this.delConfirmShow = false
             // 方法二：遍历List删除该商品可以少发一次请求
             this.getCartList()
+            // 同步购物车数量
             this.$store.commit('updateCartCount', -parseInt(this.delItem.productNum))
           }
         })
@@ -222,6 +234,7 @@
           num++
           item.productNum++
         }else if(flag == 'minus') {
+          // 判断当前数量是否小于1
           if(item.productNum <= 1) return
           num--
           item.productNum--
@@ -250,10 +263,6 @@
           }
         })
       }
-    },
-    filters: {
-      // 价格过滤器
-      // currencyFormat: currency
     }
   }
 </script>

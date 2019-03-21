@@ -33,6 +33,7 @@ app.use((req, res, next) => {
     next()
   }else {
     // console.log(`path:${req.path} originalUrl:${req.originalUrl}`)
+    // 或者用req.originalUrl.indexOf('/goods/list')>-1
     if(req.path == '/goods/list' || req.originalUrl == '/users/login' || req.originalUrl == '/users/logout') {
       next()
     }else {

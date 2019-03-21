@@ -26,7 +26,9 @@ router.get('/list', (req, res, next) => {
   // res.send('goodslist~~')
   let page = parseInt(req.param('page'))
   let pageSize = parseInt(req.param('pageSize'))
+  // 排序
   let sort = req.param('sort')
+  // 过滤
   let params = {}
   let priceLevel = req.param('priceLevel')
   var priceGt = '', priceLte = ''
@@ -36,8 +38,8 @@ router.get('/list', (req, res, next) => {
       case '1' :priceGt = 100; priceLte = 500; break;
       case '2' :priceGt = 500; priceLte = 1000; break;
       case '3' :priceGt = 1000; priceLte = 2000; break;
-      // case '4' :priceGt = 2000; break;
     }
+    // 过滤条件
     params = {
       salePrice: {
         $gt: priceGt,
@@ -70,6 +72,7 @@ router.get('/list', (req, res, next) => {
   })
 })
 
+// 这里回调太多啦！！！
 router.post('/addcart', (req, res, next) => {
   // 查询出用户信息
   Users.findOne({userId: '100000077'}, (userDataErr, userData) => {
@@ -91,6 +94,7 @@ router.post('/addcart', (req, res, next) => {
         // console.log(goodsItem)
         // 判断商品是否存在
         if(goodsItem) {
+          // 保存数据
           userData.save(plusProductNumErr => {
             if(plusProductNumErr) {
               res.json({
@@ -115,11 +119,13 @@ router.post('/addcart', (req, res, next) => {
               })
             }else {
               // 将商品信息保存到cartList里面去
-              console.log(productData.productId)
+              // console.log(productData.productId)
               if(productData) {
                 productData.productNum = 1
+                // 默认选中
                 productData.checked = 1
                 userData.cartList.push(productData)
+                // 保存数据
                 userData.save(saveProductDataErr => {
                   if(saveProductDataErr) {
                     res.json({

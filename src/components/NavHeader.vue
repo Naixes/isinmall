@@ -52,6 +52,7 @@
           <div class="md-content">
             <div class="confirm-tips">
               <div class="error-wrap">
+                <!-- 错误提示 -->
                 <span class="error error-show" v-if="errorTip">用户名或者密码错误</span>
               </div>
               <ul>
@@ -82,6 +83,7 @@
       return {
         userName: '',
         userPwd: '',
+        // 错误提示显示
         errorTip: false,
         loginShow: false
       }
@@ -107,6 +109,7 @@
         // 输入为空校验
         this.errorTip = (!this.userName || !this.userPwd)
         if(this.errorTip) return
+        
         axios.post('/users/login', {userName: this.userName, userPwd: this.userPwd}).then(result => {
           let res = result.data
           // console.log(res)
@@ -130,8 +133,8 @@
           }
         })
       },
+      // 获取购物车数量
       getCartCount() {
-        // 刷新时检查是否登陆
         axios.get('users/cartCount').then(result => {
           let res = result.data
           if(res.status == '0') {
@@ -139,8 +142,8 @@
           }
         })
       },
+      // 刷新时检查是否登陆
       checkLogin() {
-        // 刷新时检查是否登陆
         axios.get('users/checkLogin').then(result => {
           let res = result.data
           if(res.status == '0') {

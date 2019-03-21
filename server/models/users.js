@@ -11,6 +11,7 @@ const usersSchema = new mongoose.Schema({
       "productId": String,
       "salePrice": String,
       "checked":String,
+      "productName":String,
       "productNum":String,
       "productImage": String
     }

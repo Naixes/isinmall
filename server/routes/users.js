@@ -26,6 +26,7 @@ router.post('/login', (req, res, next) => {
         res.cookie('userId', userData.userId, {
           // 将cookie放入根目录
           path: '/',
+          // cookie的周期
           maxAge: 1000*60*60
         })
         res.cookie('userName', userData.userName, {
@@ -76,6 +77,7 @@ router.get('/cartCount', (req, res, next) => {
   })
 })
 
+// 登出
 router.post('/logout', (req, res, next) => {
   // 清除cookie
   res.cookie('userId', '', {

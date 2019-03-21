@@ -12,6 +12,7 @@
           <!-- sortby -->
           <span class="sortby">Sort by:</span>
           <a href="javascript:void(0)" class="default cur">Default</a>
+          <!-- 排序 -->
           <a href="javascript:void(0)" class="price" @click="sortByPrice">Price
             <svg class="icon icon-arrow-short" :class="{'sort-up':!sortFlag}">
               <use xlink:href="#icon-arrow-short"></use>
@@ -26,6 +27,7 @@
               <dt>Price:</dt>
               <dd><a href="javascript:void(0)" :class="{'cur': selectedFilter == 'all'} " @click='filterSelect("all")'>All</a></dd>
               <dd v-for="(item, index) in priceFilter" :key="item.startPrice">
+                <!-- 过滤 -->
                 <a href="javascript:void(0)" :class="{'cur': selectedFilter == index}" @click='filterSelect(index)'>{{item.startPrice}} - {{item.endPrice}}</a>
               </dd>
             </dl>
@@ -49,6 +51,7 @@
                   </div>
                 </li>
               </ul>
+              <!-- 滑动加载 -->
               <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="30" class="load-more">
                 <img src="./../assets/loading-spinning-bubbles.svg" alt="" v-show="loadingFlag">
               </div>
@@ -137,11 +140,12 @@ export default {
     this.getGoodsList(false)
   },
   methods: {
-    // loadMoreFlag：true表示连续加载
+    // loadMoreFlag：true表示连续加载，false表示覆盖列表数据，比如点击过滤时
     getGoodsList(loadMoreFlag) {
       let params = {
         page: this.page,
         pageSize: this.pageSize,
+        // 1是升序-1是降序
         sort: this.sortFlag ? 1 : -1,
         priceLevel: this.selectedFilter
       }
@@ -159,6 +163,7 @@ export default {
             if(res.result.count == 0) {
               this.busy = true
             }else {
+              // 添加列表数据
               this.goodsList = this.goodsList.concat(result.data.result.list)
               this.busy = false
             }
@@ -172,6 +177,7 @@ export default {
       }
     )
     },
+    // 过滤
     filterSelect(index) {
       this.selectedFilter = index
       // 注意清空页码
@@ -189,6 +195,7 @@ export default {
       this.maskShow = false
     },
     sortByPrice() {
+      // 排序从第一页开始
       this.page = 1
       this.sortFlag = !this.sortFlag
       this.getGoodsList(false)
