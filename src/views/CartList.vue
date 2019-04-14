@@ -223,7 +223,7 @@
             this.delConfirmShow = false
             // 方法二：遍历List删除该商品可以少发一次请求
             this.getCartList()
-            // 同步购物车数量
+            // 同步购物车数量，执行vuex中的方法
             this.$store.commit('updateCartCount', -parseInt(this.delItem.productNum))
           }
         })
